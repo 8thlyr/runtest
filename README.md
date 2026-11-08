@@ -1,13 +1,36 @@
 # RunTest
 
-RunTest is a small C17 command seam, `runtest <command> [arguments ...]`, that routes coding-agent test commands by one shared mode per macOS account: Local runs the command directly, Auto runs it under the macOS background policy (`taskpolicy -b`). It passes arguments without shell parsing, keeps the caller's working directory, environment and stdio, and returns the command's exit code or signal.
+[![CI](https://github.com/jonathancostin/runtest/actions/workflows/ci.yml/badge.svg)](https://github.com/jonathancostin/runtest/actions/workflows/ci.yml)
+
+Coding agents run `npm test` in a loop, and every run competes with your editor, browser and
+calls for the CPU. Put `runtest` in front of the command and, in Auto mode, macOS runs it at
+background priority (`taskpolicy -b`), so the tests still finish and your laptop stays usable.
+
+```sh
+runtest mode auto     # once per macOS account
+runtest npm test      # what the agent runs
+```
+
+Tell your agents to use it. Add this to `AGENTS.md` or `CLAUDE.md`:
+
+```markdown
+## Running tests
+Prefix every test command with `runtest`, for example `runtest npm test` or
+`runtest pytest -x`. It runs the command unchanged at background priority. Do not wrap it in
+`sh -c` unless the command needs shell syntax.
+```
+
+RunTest is a small C17 program, `runtest <command> [arguments ...]`. It keeps one shared mode
+per macOS account: Local runs the command directly, Auto runs it under `taskpolicy -b`. It
+passes arguments without shell parsing, keeps the caller's working directory, environment and
+stdio, and returns the command's exit code or signal.
 
 ## Status
 
-- Early stage. Only the Local and Auto modes exist today; the remote execution mentioned in the GitHub description is not built yet.
+- Early stage. Only the Local and Auto modes exist today. Remote routing is planned (#5) and not built yet.
 - The open GitHub issues describe the roadmap (as of 2026-10-20): shared test-command router (#1), Crabbox remote routing (#5), local timing evidence (#6), recommending remote suites (#7), guided Local/Auto and Remote setup (#8, #9), a native menu-bar app and project routing (#10, #11), SketchyBar controls (#12), diagnosing stuck installs (#13), Homebrew tap install and releases (#14, #15).
 - macOS only (`taskpolicy`, Application Support path).
-- No CI.
+- CI builds and runs the test suite on a macOS runner.
 
 ## Stack
 
