@@ -1,6 +1,6 @@
 # RunTest
 
-[![CI](https://github.com/jonathancostin/runtest/actions/workflows/ci.yml/badge.svg)](https://github.com/jonathancostin/runtest/actions/workflows/ci.yml)
+[![CI](https://github.com/8thlyr/runtest/actions/workflows/ci.yml/badge.svg)](https://github.com/8thlyr/runtest/actions/workflows/ci.yml)
 
 Coding agents run `npm test` in a loop, and every run competes with your editor, browser and
 calls for the CPU. Put `runtest` in front of the command and, in Auto mode, macOS runs it at
@@ -96,5 +96,5 @@ MIT. See [LICENSE](LICENSE).
 
 ## Links
 
-- Issues: https://github.com/jonathancostin/runtest/issues
+- Issues: https://github.com/8thlyr/runtest/issues
 - Related: [execution-target-switch](https://github.com/jonathancostin/execution-target-switch), a related project built around the same Local / low-impact / remote idea.
