@@ -1,6 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 import json
 import os
+import shutil
 from pathlib import Path
 import signal
 import subprocess
@@ -70,7 +71,9 @@ class RunTestCommandTests(unittest.TestCase):
             json.loads(result.stdout),
             {
                 "auto": {
-                    "available": True,
+                    # macOS ships taskpolicy; a Linux box running the suite
+                    # does not, and status has to say so rather than assume.
+                    "available": shutil.which("taskpolicy") is not None,
                     "fallback": "direct local execution",
                     "policy": "taskpolicy -b",
                 },

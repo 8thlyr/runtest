@@ -1,3 +1,13 @@
+/* mkstemp and getpwuid are POSIX, but -std=c17 hides them unless the host's
+   feature-test macro is on. glibc wants _DEFAULT_SOURCE; Darwin declares them
+   anyway and ignores the define. */
+#ifndef _DEFAULT_SOURCE
+#define _DEFAULT_SOURCE
+#endif
+#ifndef _DARWIN_C_SOURCE
+#define _DARWIN_C_SOURCE
+#endif
+
 #include <errno.h>
 #include <fcntl.h>
 #include <pwd.h>
@@ -223,7 +233,7 @@ static bool executable_is_on_path(const char *name) {
     const char *separator = strchr(directory, ':');
     size_t directory_length =
         separator == NULL ? strlen(directory) : (size_t)(separator - directory);
-    size_t candidate_length = directory_length + 1 + name_length + 1;
+    size_t candidate_length = directory_length + 1 + name_length + 2;
     char *candidate = malloc(candidate_length);
     if (candidate == NULL) {
       return false;
